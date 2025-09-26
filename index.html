@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Three Clickable Pictures with Audio</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: #f3f6f9;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 960px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 12px;
+      box-shadow: 0 6px 18px rgba(20,30,40,0.06);
+      text-align: center;
+      cursor: pointer;
+      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+      border: 2px solid transparent;
+      outline: none;
+    }
+    .card:hover,
+    .card:focus {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px rgba(20,30,40,0.10);
+    }
+    .card[aria-pressed="true"] {
+      border-color: #007bff;
+    }
+
+    .thumb {
+      display: block;
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .title {
+      font-weight: 600;
+      color: #222;
+      margin-bottom: 6px;
+    }
+
+    .sub {
+      font-size: 13px;
+      color: #666;
+    }
+
+    .playing-indicator {
+      display: none;
+      margin-top: 8px;
+      font-size: 13px;
+      font-weight: bold;
+      color: #007bff;
+    }
+
+    @media (max-width: 768px) {
+      .container { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 500px) {
+      .container { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="container">
+    <div class="card" role="button" tabindex="0" data-audio="audio1" aria-pressed="false">
+      <img class="thumb" alt="Picture A" src="assets/img/cookie.jpg">
+      <div class="title">餅乾</div>
+      <div class="sub">Cookies</div>
+      <div class="playing-indicator">▶ Playing</div>
+    </div>
+
+    <div class="card" role="button" tabindex="0" data-audio="audio2" aria-pressed="false">
+      <img class="thumb" alt="Picture B" src="assets/img/yougurt.jpg">
+      <div class="title">優格</div>
+      <div class="sub">Yougurt</div>
+      <div class="playing-indicator">▶ Playing</div>
+    </div>
+
+    <div class="card" role="button" tabindex="0" data-audio="audio3" aria-pressed="false">
+      <img class="thumb" alt="Picture C" src="assets/img/juice.jpg">
+      <div class="title">果汁</div>
+      <div class="sub">Juice</div>
+      <div class="playing-indicator">▶ Playing</div>
+    </div>
+	
+	<div class="card" role="button" tabindex="0" data-audio="audio4" aria-pressed="false">
+      <img class="thumb" alt="Picture D" src="assets/img/nene.jpg">
+      <div class="title">ㄋㄟ ㄋㄟ</div>
+      <div class="sub">Milk</div>
+      <div class="playing-indicator">▶ Playing</div>
+    </div>
+	
+	<div class="card" role="button" tabindex="0" data-audio="audio5" aria-pressed="false">
+      <img class="thumb" alt="Picture D" src="assets/img/vegetable.jpg">
+      <div class="title">菜菜</div>
+      <div class="sub">Vegetable</div>
+      <div class="playing-indicator">▶ Playing</div>
+    </div>
+	<div class="card" role="button" tabindex="0" data-audio="audio6" aria-pressed="false">
+      <img class="thumb" alt="Picture D" src="assets/img/noodle.jpg">
+      <div class="title">麵麵</div>
+      <div class="sub">Noodle</div>
+      <div class="playing-indicator">▶ Playing</div>
+    </div>
+	<div class="card" role="button" tabindex="0" data-audio="audio7" aria-pressed="false">
+      <img class="thumb" alt="Picture D" src="assets/img/rice.jpg">
+      <div class="title">飯飯</div>
+      <div class="sub">Rice</div>
+      <div class="playing-indicator">▶ Playing</div>
+    </div>
+	<div class="card" role="button" tabindex="0" data-audio="audio8" aria-pressed="false">
+      <img class="thumb" alt="Picture D" src="assets/img/icecream.jpg">
+      <div class="title">冰淇淋</div>
+      <div class="sub">Ice cream</div>
+      <div class="playing-indicator">▶ Playing</div>
+    </div>
+	<div class="card" role="button" tabindex="0" data-audio="audio9" aria-pressed="false">
+      <img class="thumb" alt="Picture D" src="assets/img/want.jpg">
+      <div class="title">要</div>
+      <div class="sub">want</div>
+      <div class="playing-indicator">▶ Playing</div>
+    </div>
+	</div>
+	
+
+  <!-- Replace these audio sources -->
+  <audio id="audio1" src="assets/sound/cookie.mp3"></audio>
+  <audio id="audio2" src="assets/sound/yougurt.mp3"></audio>
+  <audio id="audio3" src="assets/sound/juice.mp3"></audio>
+  <audio id="audio4" src="assets/sound/nene.mp3"></audio>
+  <audio id="audio5" src="assets/sound/vegetable.mp3"></audio>
+  <audio id="audio6" src="assets/sound/noodle.mp3"></audio>
+  <audio id="audio7" src="assets/sound/rice.mp3"></audio>
+  <audio id="audio8" src="assets/sound/icecream.mp3"></audio>
+  <audio id="audio9" src="assets/sound/want.mp3"></audio>
+  <script>
+    const cards = document.querySelectorAll('.card');
+    const audios = {
+      audio1: document.getElementById('audio1'),
+      audio2: document.getElementById('audio2'),
+      audio3: document.getElementById('audio3'),
+	  audio4: document.getElementById('audio4'),
+	  audio5: document.getElementById('audio5'),
+	  audio6: document.getElementById('audio6'),
+	  audio7: document.getElementById('audio7'),
+	   audio8: document.getElementById('audio8'),
+	  audio9: document.getElementById('audio9')
+    };
+
+    function stopAll() {
+      Object.values(audios).forEach(a => { a.pause(); a.currentTime = 0; });
+      cards.forEach(c => {
+        c.setAttribute('aria-pressed', 'false');
+        c.querySelector('.playing-indicator').style.display = 'none';
+      });
+    }
+
+    function playForCard(card) {
+      const audioId = card.dataset.audio;
+      const audio = audios[audioId];
+      if (!audio) return;
+
+      const alreadyPlaying = card.getAttribute('aria-pressed') === 'true';
+      if (alreadyPlaying) {
+        stopAll();
+        return;
+      }
+
+      stopAll();
+      audio.play();
+      card.setAttribute('aria-pressed', 'true');
+      card.querySelector('.playing-indicator').style.display = 'block';
+    }
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => playForCard(card));
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          playForCard(card);
+        }
+      });
+    });
+
+    Object.entries(audios).forEach(([id, audio]) => {
+      audio.addEventListener('ended', stopAll);
+    });
+  </script>
+</body>
+</html>
